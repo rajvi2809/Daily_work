@@ -1,3 +1,211 @@
+
+//derived state
+import { useState } from "react";
+function App(){
+  const [users,setUsers]=useState([])
+  const [user,setUser]=useState('')
+  const handleUsers=()=>{
+    setUsers([...users,user])
+  }
+ 
+  const total=users.length
+  const last=users[users.length-1]
+  const unique=[... new Set(users)].length
+  return(
+    <><br />
+    <h2>Total Users: {total}</h2>
+    <h2>Last User: {last}</h2>
+    <h2>Unique Total User: {unique}</h2>
+      <input onChange={(event)=>setUser(event.target.value)} type="text" placeholder="add new user" />
+      <button onClick={handleUsers}>Add</button>
+      {
+        users.map((item,index)=>(
+          <h4 key={index}>{item}</h4>
+        ))
+      }
+    </>
+  )
+}
+
+// //useTransition Hooks
+// import { useTransition } from "react";
+// function App(){
+//   const [pending,startTransition]=useTransition();
+//   const buttonHandler=()=>{
+//     startTransition(async()=>{
+//       await new Promise(res=>setTimeout(res,2000));
+//     }) 
+//   }
+//   return(
+//     <>
+//       <h1>useTransition Hooks</h1>
+//       <button disabled={pending} onClick={buttonHandler}>Click Me</button>
+//       {pending? <img style={{width:'250px'}} src="https://i.pinimg.com/originals/d7/34/49/d73449313ecedb997822efecd1ee3eac.gif" alt="" /> :null }
+//     </>
+//   )
+// }
+
+// //useFormStatus Hook
+// import { useFormStatus } from "react-dom";
+// function App() {
+
+//   const hookFunction = async () => {
+//     await new Promise(res => setTimeout(res, 5000))
+//     console.log("Called ")
+//   }
+
+//   const FormFunction = () => {
+//     const {pending}=useFormStatus()
+//     console.log(pending);
+//    return(
+//      <>
+//       <input type="text" placeholder="username" /><br /><br />
+//       <input type="text" placeholder="password" /><br /><br />
+//       <button disabled={pending}>{pending ? 'Submitting' : 'Submit'}</button>
+//     </>
+//    )
+//   }
+
+//   return (
+//     <div>
+//       <h1>useFormStatus Hook</h1>
+//       <form action={hookFunction}>
+//       <FormFunction />
+//       </form>
+//     </div>
+//   )
+// }
+
+
+// //forward Reference
+// import { useRef } from "react";
+// import UserInput from "./UserInput";
+
+// function App(){
+//   const inputRef=useRef(null);
+
+//   const clickFunction=()=>{
+//     console.log("Called")
+//     inputRef.current.value='Changed';
+//     inputRef.current.style.color="blue"
+//     inputRef.current.focus();
+//   }
+
+//   return(
+//     <div>
+//       <h1>Forward Ref</h1>
+//       <UserInput ref={inputRef} />
+//       <button onClick={clickFunction}>Click Me!</button>
+//     </div>
+//   )
+// }
+
+
+
+// //passing functions to components as props
+// import User from "./User";
+// function App(){
+
+//   const nameFunction=(name)=>{
+//     alert(name)
+//   }
+
+//   return(
+//     <>
+//       <h1>Call parent from child</h1>
+//       <User displayName={nameFunction} name="a"/><br />
+//       <User displayName={nameFunction} name="b" /><br />
+//       <User displayName={nameFunction} name="c" /><br />
+//       <User displayName={nameFunction} name="d" />
+//     </>
+//   )
+// }
+
+
+
+//uncontrolled components
+// import { useRef } from "react";
+// function App(){
+
+//   const ref1=useRef(null)
+//   const ref2=useRef(null)
+
+//  const submitHandler=(event)=>{
+//     event.preventDefault();
+//     const user=document.querySelector("#user").value;
+//     const pass=document.querySelector("#password").value;
+//     console.log("SubmitHandler function ",user,pass)
+//   }
+
+//   const handleRef=(event)=>{
+//     event.preventDefault();
+//     const user=ref1.current.value;
+//     const pass=ref2.current.value;
+//     console.log("Ref function ",user,pass)
+//   }
+
+//   return(
+//     <><br />
+//     <h1>Uncontrolled Components</h1><br />
+//     <form action=""  onSubmit={submitHandler}>
+//       <input type="text" id="user" placeholder="Username" /><br /><br />
+//       <input type="password" id="password" placeholder="password" /><br /><br />
+//       <button>Submit</button>
+//     </form><hr />
+
+//     <h1>Uncontrolled Components with ref</h1><br />
+//     <form action=""  onSubmit={handleRef}>
+//       <input ref={ref1} type="text" placeholder="Username" /><br /><br />
+//       <input ref={ref2} type="password" placeholder="password" /><br /><br />
+//       <button>Submit</button>
+//     </form>
+//     </>
+//   )
+// }
+
+
+
+//UseRef
+// import { useRef } from "react";
+// function App(){
+
+//   const inputRef=useRef(null);
+
+//   const inputRef2=useRef(null);
+
+//   const inputRef3=useRef(null);
+
+//   const checkfun=()=>{
+//     console.log(inputRef);
+//     inputRef.current.focus(); 
+//     inputRef.current.style.backgroundColor='pink'
+//     inputRef.current.value='Default'
+//   }
+
+//   const toggleHandle=()=>{
+//    inputRef2.current.style.display = inputRef2.current.style.display!=='none' ? 'none' : 'inline'
+//   }
+
+//   const changeColor=()=>{
+//     inputRef3.current.style.color="red";
+//   }
+//   return(
+//     <>
+//       <h2>useRef</h2>
+//       <br />
+//       <input ref={inputRef} type="text" placeholder="Username"/><br />
+//       <button onClick={checkfun}>Click Me!</button><br />
+//       <button onClick={toggleHandle}>Toggle</button><br />
+//       <h2 ref={inputRef2}>Toggle me</h2><br />
+//       <button onClick={changeColor}>Change H1 color</button><br />
+//       <h1 ref={inputRef3}>Change my color</h1>
+//     </>
+//   )
+// }
+
+
+
+//Day 2
 // import { useState } from "react";
 // import { Button } from "bootstrap";
 
@@ -71,7 +279,7 @@
 //   )
 // }
 
-// export default App;
+
 
 
 
@@ -96,36 +304,36 @@
 //   )
 // }
 
-// //export default App;
 
-import { useState,useEffect } from "react";
-import Counter from "./Counter";
 
-function App() {
+// import { useState,useEffect } from "react";
+// import Counter from "./Counter";
 
-  const [count, setCount] = useState(0);
-  const [data,setData]=useState(0);
+// function App() {
 
-  useEffect(() => {
-    //callOnce();
-    counterFunction();
-  },[data])
+//   const [count, setCount] = useState(0);
+//   const [data,setData]=useState(0);
 
-  function callOnce() {
-    console.log("Function callOnce")
-  }
+//   useEffect(() => {
+//     //callOnce();
+//     counterFunction();
+//   },[data])
 
-  function counterFunction(){
-    console.log("callOnce ", count);
-  }
+//   function callOnce() {
+//     console.log("Function callOnce")
+//   }
 
-  return (
-    <div>
-      <h2>useEffect Hooks</h2>
-      <button onClick={() => setCount(count + 1)}>Counter {count}</button>
-      <button onClick={()=>setData(data)}>Data {data}</button>
-    </div>
-  )
-}
+//   function counterFunction(){
+//     console.log("callOnce ", count);
+//   }
 
-export default App;
+//   return (
+//     <div>
+//       <h2>useEffect Hooks</h2>
+//       <button onClick={() => setCount(count + 1)}>Counter {count}</button>
+//       <button onClick={()=>setData(data)}>Data {data}</button>
+//     </div>
+//   )
+// }
+
+ export default App;

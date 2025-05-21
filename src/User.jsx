@@ -1,9 +1,10 @@
-function User(){
+function User({displayName,name}){
     return(
         <>
-            <h3>User component</h3>
+            {/* <h3>User component called</h3> */}
+            <button onClick={()=>{displayName(name)}}>Display name</button><br />
         </>
     )
 }
 
-export default User;
+export default User;    
