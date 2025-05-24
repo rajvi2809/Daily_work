@@ -1,31 +1,187 @@
+import useToggle from "./useToggle";
 
-//derived state
-import { useState } from "react";
-function App(){
-  const [users,setUsers]=useState([])
-  const [user,setUser]=useState('')
-  const handleUsers=()=>{
-    setUsers([...users,user])
-  }
- 
-  const total=users.length
-  const last=users[users.length-1]
-  const unique=[... new Set(users)].length
-  return(
-    <><br />
-    <h2>Total Users: {total}</h2>
-    <h2>Last User: {last}</h2>
-    <h2>Unique Total User: {unique}</h2>
-      <input onChange={(event)=>setUser(event.target.value)} type="text" placeholder="add new user" />
-      <button onClick={handleUsers}>Add</button>
-      {
-        users.map((item,index)=>(
-          <h4 key={index}>{item}</h4>
-        ))
-      }
-    </>
-  )
+//making custom hooks
+function App() {
+    const [value, toogleValue] = useToggle(true)
+    const [data, toggleData] = useToggle(true)
+    console.log("Value==", value)
+    return (
+        <>
+            <button onClick={toogleValue}>Toggle</button>
+            <button onClick={() => { toogleValue(false) }}>Hide</button>
+            <button onClick={() => { toogleValue(true) }}>Show</button>
+            {
+                value ? <h2>Making Custom Hooks </h2> : null
+            }
+
+
+            <hr />
+            <button onClick={toggleData}>Toggle</button>
+            <button onClick={()=>toggleData(false)}>Hide</button>
+            <button onClick={()=>{toggleData(true)}}>Show</button>
+            {
+                data ? <h2>Hook 2</h2> : null
+            }
+        </>
+    )
 }
+
+//Context API
+// import { useState } from "react";
+// import College from "./College"
+// import { subjectContext } from "./ContextData";
+// function App() {
+//     const [change,setChange]=useState('Sub1')
+//     return (
+//         <div style={{ backgroundColor: "#bc4b51", padding: "3px", margin: "8px" }}>
+//             <subjectContext.Provider value={change}>
+//                 <select value={change} name="" id="" onChange={(event)=>setChange(event.target.value)}>
+//                     <option value="">Select</option>
+//                     <option value="Sub1">Sub1</option>
+//                     <option value="Sub2">Sub2</option>
+//                     <option value="Sub3">Sub3</option>
+//                     <option value="Sub4">Sub4</option>
+//                 </select>
+//                 <button onClick={()=>setChange(' ')}>Click Me</button>
+//                 <h2>Context API</h2><h6>Sending data</h6>
+//                 <College />
+//             </subjectContext.Provider>
+//         </div>
+//     )
+// }
+
+// import { useActionState } from "react";
+
+// //useActionState
+// function App(){
+//   const formFunction=async (prevData,formData)=>{
+//     let name=formData.get('name')
+//     let pass=formData.get('password')
+
+//      await new Promise(res=>setTimeout(res,2000))
+//     //console.log("FormFunction called",name,pass)
+//     if(name && pass){
+//       return({msg:'Submitted',name,pass})
+//     }
+//     else{
+//       return({error:'Error',name,pass})
+//     }
+//   }
+//   const [data,action,pending]=useActionState(formFunction,undefined)
+//   console.log(data);
+//   return(
+//     <>
+//       <h2>useFormAction Hook</h2><br />
+//       <form action={action}>
+//         <input defaultValue={data?.name} type="text" placeholder="Name" name="name"/><br /><br />
+//         <input defaultValue={data?.pass} type="password" placeholder="Password" name="password" /><br /><br />
+//         <button disabled={pending}>Submit</button><br />
+//       </form>
+//         {data?.error && <span style={{color:'red'}}>{data?.error}</span>}
+//         {data?.msg && <span style={{color:'green'}}>{data?.msg}</span>}
+//         <h2>name: {data?.name}</h2>
+//         <h2>password: {data?.pass}</h2>
+//     </>
+//   )
+// }
+
+// import { useState } from "react";
+
+// //updating objects in state
+// function App(){
+//   const [data,setData]=useState({
+//   });
+//   const changeData=(userData)=>{
+//     data.address.city=userData
+//     console.log(userData);
+//     setData({...data,address:{...data.address,city:userData}})
+
+//   }
+
+//   return(
+//     <>
+//       <h2>updating objects in state</h2>
+//       <h3>Name:{data.name}</h3>
+//       <h3>City:{data.address.city}</h3>
+//       <h3>State:{data.address.state}</h3>
+//       <input type="text" placeholder="Enter here" onChange={(e)=>changeData(e.target.value)} />
+//     </>
+//   )
+// }
+
+// //updating array in state
+
+// import { useState } from "react";
+
+// function App(){
+//   const [name,setName]=useState(['a','b','c']);
+//   const handleChange=(userName)=>{
+//     name[name.length-1]=userName;
+//     console.log(name)
+//     setName([...name])
+//   }
+
+//   const [dataDetails,setDataDetails]=useState([
+//     {name:'abc',age:'20'},
+//     {name:'pqr',age:'29'},
+//     {name:'xyz',age:'24'}
+//   ])
+//   const handleAge=(userAge)=>{
+//     dataDetails[dataDetails.length-1].age=userAge;
+//     console.log(dataDetails)
+//     setDataDetails([...dataDetails])
+//   }
+
+//   return(
+//     <>
+
+//       <h2>changing object using state</h2>
+//       {
+//           name.map((item,index)=>(
+//           <h3 key={index}>{item}</h3>
+//         ))
+//       }
+//       <input type="text" placeholder="name" onChange={(e)=>handleChange(e.target.value)} /><hr />
+
+//       <h2>changing array of objects</h2>
+//       {
+//         dataDetails.map((item,index)=>(
+//           <h4 key={index}>{item.name},{item.age}</h4>
+//         ))
+//       }
+//       <input type="text" placeholder="age" onChange={(e)=>handleAge(e.target.value)}/>
+//     </>
+//   )
+// }
+
+
+// //derived state
+// import { useState } from "react";
+// function App(){
+//   const [users,setUsers]=useState([])
+//   const [user,setUser]=useState('')
+//   const handleUsers=()=>{
+//     setUsers([...users,user])
+//   }
+
+//   const total=users.length
+//   const last=users[users.length-1]
+//   const unique=[... new Set(users)].length
+//   return(
+//     <><br />
+//     <h2>Total Users: {total}</h2>
+//     <h2>Last User: {last}</h2>
+//     <h2>Unique Total User: {unique}</h2>
+//       <input onChange={(event)=>setUser(event.target.value)} type="text" placeholder="add new user" />
+//       <button onClick={handleUsers}>Add</button>
+//       {
+//         users.map((item,index)=>(
+//           <h4 key={index}>{item}</h4>
+//         ))
+//       }
+//     </>
+//   )
+// }
 
 // //useTransition Hooks
 // import { useTransition } from "react";
@@ -168,13 +324,9 @@ function App(){
 //UseRef
 // import { useRef } from "react";
 // function App(){
-
 //   const inputRef=useRef(null);
-
 //   const inputRef2=useRef(null);
-
 //   const inputRef3=useRef(null);
-
 //   const checkfun=()=>{
 //     console.log(inputRef);
 //     inputRef.current.focus(); 
@@ -336,4 +488,4 @@ function App(){
 //   )
 // }
 
- export default App;
+export default App;
