@@ -1,30 +1,71 @@
-import useToggle from "./useToggle";
+import { useActionState } from "react";
 
-//making custom hooks
-function App() {
-    const [value, toogleValue] = useToggle(true)
-    const [data, toggleData] = useToggle(true)
-    console.log("Value==", value)
-    return (
-        <>
-            <button onClick={toogleValue}>Toggle</button>
-            <button onClick={() => { toogleValue(false) }}>Hide</button>
-            <button onClick={() => { toogleValue(true) }}>Show</button>
+//validations using useActionState
+function App(){
+    const handleData=(oldData,newData)=>{
+        const name=newData.get('name')
+        const pass=newData.get('password') 
+        console.log(name,pass)    
+        let regex=/^[A-Z]+$/i
+
+        if(!name || !regex.test(name)){
+            return{error:"Must enter valid Name",name,pass}
+        }
+        else if(!pass || pass.length>8){
+            return{error:"Must fill Password less than 8 characters",name,pass}
+        }
+        else{
+            return{msg:"Login Successfull",name,pass}
+        }
+    }
+    const [data,action,pending]=useActionState(handleData)
+    console.log(data)
+
+    return(
+        <div style={{margin:"7px"}}>
+            <h2>Validations using useActionState</h2>
             {
-                value ? <h2>Making Custom Hooks </h2> : null
+                data?.msg && <span  style={{color:'green'}}>{data.msg}</span>
             }
-
-
-            <hr />
-            <button onClick={toggleData}>Toggle</button>
-            <button onClick={()=>toggleData(false)}>Hide</button>
-            <button onClick={()=>{toggleData(true)}}>Show</button>
             {
-                data ? <h2>Hook 2</h2> : null
+                data?.error && <span style={{color:'red'}}>{data.error}</span>
             }
-        </>
+            <form action={action}>
+                <input type="text" defaultValue={data?.name} name="name" placeholder="name" /><br /><br />
+                <input type="text" defaultValue={data?.pass} name="password" placeholder="password" /><br /><br />
+                <button>Submit</button>
+            </form>
+        </div>
     )
 }
+
+// // making custom hooks
+
+// import useToggle from "./useToggle";
+// function App() {
+//     const [value, toogleValue] = useToggle(true)
+//     const [data, toggleData] = useToggle(true)
+//     console.log("Value==", value)
+//     return (
+//         <>
+//             <button onClick={toogleValue}>Toggle</button>
+//             <button onClick={() => { toogleValue(false) }}>Hide</button>
+//             <button onClick={() => { toogleValue(true) }}>Show</button>
+//             {
+//                 value ? <h2>Making Custom Hooks </h2> : null
+//             }
+
+
+//             <hr />
+//             <button onClick={toggleData}>Toggle</button>
+//             <button onClick={()=>toggleData(false)}>Hide</button>
+//             <button onClick={()=>{toggleData(true)}}>Show</button>
+//             {
+//                 data ? <h2>Hook 2</h2> : null
+//             }
+//         </>
+//     )
+// }
 
 //Context API
 // import { useState } from "react";
